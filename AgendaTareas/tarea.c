@@ -14,14 +14,15 @@ void menuEditarTarea();
 void buscarTarea();
 void listarTareas();*/
 
-
+Tarea listaTareas[100];
+int cantTareas = 0;
 
 const char* opcionesMenuCrearTarea[] = {
     "Ingresa el Titulo: ",
     "Ingresar la descripcion: ",
-    "Ingrese el estado ((P)endiente / (E)n proceso / (T)erminada / (C)ancelada): ",
-    "Ingrese la dificultad ([1] / [2] / [3]/):",
-    "Ingrese el Vencimiento (dd/mm/aaaa): ",
+    "Ingrese el estado: ",
+    "Ingrese la dificultad:",
+    "Ingrese el Vencimiento: ",
     "Guardar la tarea y volver al menu principal.",
     "Volver al menu anterior, sin guardar."
 };
@@ -31,9 +32,18 @@ const char* opcionesEstado[] = {
     "Pendiente",
     "En curso",
     "Terminada",
-    "Cancelada"
+    "Cancelada",
+    "Volver al menu anterior."
 };
 int cantOpcEstado = sizeof(opcionesEstado) / sizeof(opcionesEstado[0]);
+
+const char* opcionesDificultad[] = {
+    "Facil",
+    "Medio",
+    "Dificil",
+    "Volver al menu anterior."
+};
+int cantOpcDificultad = sizeof(opcionesDificultad) / sizeof(opcionesDificultad[0]);
 
 
 
@@ -47,22 +57,22 @@ void hacerMenu(const char* titulo, const char* opciones[], int cantidad){
     }
 }
 char* horaActu(){
-        static char hora[80];
+        static char hora[60];
         time_t horaActual = time(NULL);
         struct tm* infoTiempo = localtime(&horaActual);
 
         strftime(hora, sizeof(hora), "%d/%m/%Y %H:%M:%S", infoTiempo);
 
-        printf("La hora actual es: %s\n", hora);
+        //printf("La hora actual es: %s\n", hora);
         return hora;
    }
 
 void menuCrearTarea(){
-    char titulo[60];
+    char titulo[100];
     char descripcion[200];
-    int estado;
+    int estado = 1;
     char fechaVencimiento[30];
-    int dificultad;
+    int dificultad = 1;
     int opcion = -1;
     while(opcion!=0){
         hacerMenu("Crear Tarea", opcionesMenuCrearTarea, cantOpcMenuCrearTarea);
@@ -74,7 +84,7 @@ void menuCrearTarea(){
                     printf("Ingrese el titulo de la tarea: ");
                     scanf("%s", titulo);
                     printf("El titulo con el nombre: %s, ha sido guadado\n", titulo);
-                    printf("Titulo guradado, presione una tecla para volver al menu: crear tarea.");
+                    printf("Titulo guradado, presione una tecla para continuar.");
                     getch();
                     system("cls");
                     break;
@@ -82,7 +92,7 @@ void menuCrearTarea(){
                     printf("Ingrese la descripcion: ");
                     scanf("%s", descripcion);
                     printf("La descripcion: %s, ha sido guardada. \n  \n", descripcion);
-                    printf("Descripcion guardada, presione una tecla para volver al menu: crear tarea");
+                    printf("Descripcion guardada, presione una tecla continuar.");
                     getch();
                     system("cls");
                     break;
@@ -90,53 +100,122 @@ void menuCrearTarea(){
                     printf("Ingrese el estado de la tarea: ");
                     hacerMenu("Ingrese el estado de la tarea: ", opcionesEstado, cantOpcEstado);
                     scanf("%i", &estado);
-
-
-                    printf("Estado guardado, presione una tecla para volver al menu: crear tarea");
-                    getch();
-                    system("cls");
-                    break;
-                case 4:
-                    printf("Ingrese la dificultad ([1] / [2] / [3]): ");
+                    if(estado == 0){
+                        printf("Presiona una tecla para continuar.");
+                        getch();
+                        system("cls");
+                        break;
+                    } else {
+                    if (estado < 1 || estado > 4) {
+                        printf("Estado inválido. \n");
+                        estado = 1;
+                        break;
+                        } else{
+                            printf("Estado guardado, presione una tecla para continuar.");
+                            getch();
+                            system("cls");
+                            break;
+                        }
+                    }
+                case 4: //Cargar dificultad
+                    printf("Ingrese la dificultad:");
+                    hacerMenu("Ingrese la dificultad de la tarea: ", opcionesDificultad, cantOpcDificultad);
                     scanf("%i", &dificultad);
-                    printf("El estado: %i, ha sido guardado. \n  \n", dificultad);
-                    printf("Dificultad guardada, presione una tecla para volver al menu: crear tarea");
-                    getch();
-                    system("cls");
-                    break;
+                    if(dificultad==0){
+                        printf("Presiona una tecla para continuar.");
+                        getch();
+                        system("cls");
+                        break;
+                    } else {
+                        printf("La dificultad: %i, ha sido guardado. \n  \n", dificultad);
+                        printf("Dificultad guardada, presione una tecla para continuar.");
+                        getch();
+                        system("cls");
+                        break;
+                    }
                 case 5:
                     printf("Ingrese la fecha de vencimiento (dd/mm/aaaa): ");
                     scanf("%s", fechaVencimiento);
                     printf("La fecha: %s, ha sido guardada. \n  \n", fechaVencimiento);
-                    printf("Fecha guardada, presione una tecla para volver al menu: crear tarea");
+                    printf("Fecha guardada, presione una tecla para continuar.");
                     getch();
                     system("cls");
                     break;
                 case 6:
-                    Tarea tarea1 = inicializarTarea(titulo, descripcion, dificultad, estado);
                     //control para inicializar tarea
+                    if(strlen(titulo) == 0){
+                        printf("No se puede guardar una tarea sin titulo.");
+                        getch();
+                        system("cls");
+                        break;
+                    } else {
+                        Tarea tarea1 = inicializarTarea(titulo, descripcion, dificultad, estado, fechaVencimiento);
+
+
                     //Tarea tarea1 = inicializarTarea();
-                    printf("Guardar la tarea y volver al menu principal.");
-                    scanf("%s", fechaVencimiento);
-                    printf("La fecha: %s, ha sido guardada. \n  \n", fechaVencimiento);
-                    printf("Fecha guardada, presione una tecla para volver al menu: crear tarea");
+                    printf("La tarea %s ha sido creada.\n Desc: %s,\n dificultad %i,\n estado %i,\n fecha de creacion %s.\n", tarea1.titulo, tarea1.descripcion, tarea1.dificultad, tarea1.estado, tarea1.fechaCreacion);
+                    if (cantTareas<100){
+                        listaTareas[cantTareas] = tarea1;
+                        cantTareas++;
+                        opcion = 0;
+                    } else {
+                        printf("No se pueden agregar más tareas.");
+                    }
+                    printf("Fecha guardada, presione una tecla para continuar.");
                     getch();
                     system("cls");
-                    default: ;
+                    break;
+                    }
+
+                case 0:
+                    return;
+                    break;
+                    default:
+                        printf("Opcion invalida.\n");
+                        getch();
+                        system("cls");
+                        break;
                     }
                 }
    }
 
-Tarea inicializarTarea(const char* titulo, const char* descripcion, int dificultad, char estado){
+Tarea inicializarTarea(const char* titulo, const char* descripcion, int dificultad, int estado, char* FechaVencimiento){
     Tarea t;
     strcpy(t.titulo, titulo);
     strcpy(t.descripcion, descripcion);
     t.dificultad = dificultad;
     t.estado = estado;
-    t.fecha_creacion = time(NULL);
-    t.ultimaEdicion = t.fecha_creacion;
-    t.vencimiento = t.fecha_creacion;
+    strcpy(t.fechaCreacion, horaActu());
+    strcpy(t.ultimaEdicion, horaActu());
+    strcpy(t.vencimiento, FechaVencimiento);
+
+
     return t;
+}
+
+void listarTareas(){
+    if(cantTareas == 0){
+        printf("No hay tareas para mostrar.\n");
+        getch();
+        return;
+    }
+
+    printf("====== LISTADO DE TAREAS ======\n\n");
+
+    for (int i = 0; i < cantTareas; i++) {
+        printf("Tarea %i:\n", i + 1);
+        printf("  Titulo        : %s\n", listaTareas[i].titulo);
+        printf("  Descripcion   : %s\n", listaTareas[i].descripcion);
+        printf("  Estado        : %s\n", opcionesEstado[listaTareas[i].estado - 1]);
+        printf("  Dificultad    : %d\n", listaTareas[i].dificultad);
+        printf("  Fecha creacion: %s\n", listaTareas[i].fechaCreacion);
+        printf("  Ult. edicion  : %s\n", listaTareas[i].ultimaEdicion);
+        printf("  Vencimiento   : %s\n", listaTareas[i].vencimiento);
+        printf("-------------------------------\n");
+    }
+
+    printf("Presione una tecla para continuar...");
+    getch();
 }
 
 

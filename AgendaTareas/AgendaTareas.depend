@@ -1,15 +1,15 @@
 # depslib dependency file v1.0
-1751254256 source:f:\gonza\formación\unvime\integradorepya\agendatareas\tarea.c
+1751309436 source:f:\gonza\formación\unvime\integradorepya\agendatareas\tarea.c
 	<stdio.h>
 	<string.h>
 	<stdlib.h>
 	<conio.h>
 	"tarea.h"
 
-1751252861 f:\gonza\formación\unvime\integradorepya\agendatareas\tarea.h
+1751307321 f:\gonza\formación\unvime\integradorepya\agendatareas\tarea.h
 	<time.h>
 
-1751252861 source:f:\gonza\formación\unvime\integradorepya\agendatareas\main.c
+1751309230 source:f:\gonza\formación\unvime\integradorepya\agendatareas\main.c
 	<stdio.h>
 	<conio.h>
 	<time.h>

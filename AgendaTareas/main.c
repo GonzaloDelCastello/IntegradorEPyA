@@ -65,26 +65,31 @@ while(opcion!=0){
     printf("Seleccione una opcion: ");
     scanf("%i", &opcion);
     system("cls");
-
-
         switch (opcion){
         case 1:
             menuCrearTarea();
-
-
-
-
-
-                break;
+            break;
 
         case 2:
-
-                break;
-
-
+            break;
+        case 3:
+            listarTareas();
+            break;
+        case 0:
+            printf("Hasta la Victoria Siembre");
+            getch();
+            system("cls");
+            break;
+        default:
+            printf("Opcion invalida.\n");
+            printf("Presiona una tecla para volver la menu.");
+            getch();
+            system("cls");
+            break;
     }
+
     system("cls");
-    opcion = -1;
+    //opcion = 0;
 }
     return 0;
 
