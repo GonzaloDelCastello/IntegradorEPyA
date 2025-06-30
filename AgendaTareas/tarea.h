@@ -18,7 +18,8 @@ typedef struct {
 
 // Declaración de funciones
 void mostrarTarea(Tarea* t);
-void inicializarTarea(Tarea* t, const char* titulo, const char* descripcion, int dificultad);
+//void inicializarTarea(Tarea* t, const char* titulo, const char* descripcion, int dificultad);
+Tarea inicializarTarea(const char* titulo, const char* descripcion, int dificultad, char estado);
 void hacerMenu(const char* titulo, const char* opciones[], int cantidad);
 char* horaActu();
 

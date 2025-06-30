@@ -1,10 +1,12 @@
 #include<stdio.h>
 #include<conio.h>
 #include<time.h>
+#include <stdlib.h>
 #include "tarea.h"
 
 
-
+void menuCrearTarea();
+void hacerMenu();
 /*void menuCrearTarea();
 void menuPrincipal();
 void menuEditarTarea();
@@ -37,10 +39,8 @@ void listarTareas();*/
 
 int main() {
 
+
 int opcion=1;
-
-printf("\nBienvenidx a tu gestor de TAREAS\n\n");
-
 
 const char* menuPrincipal[] = {
     "Crear nuevas tareas",
@@ -51,20 +51,40 @@ const char* menuPrincipal[] = {
 
 int cantOpcMenuPrincipal = sizeof(menuPrincipal) / sizeof(menuPrincipal[0]);
 
+printf("\nBienvenidx a tu gestor de TAREAS\n\n");
+
+
+
+
+
 //Inicia el menú principal
 while(opcion!=0){
 
     hacerMenu("Menu Principal", menuPrincipal, cantOpcMenuPrincipal);
 
     printf("Seleccione una opcion: ");
-    scanf("%d", &opcion);
+    scanf("%i", &opcion);
+    system("cls");
 
-    switch (opcion){
+
+        switch (opcion){
         case 1:
-            hacerMenu("Crear Tarea", menuCrearTarea, cantOpcMenuCrearTarea);
+            menuCrearTarea();
+
+
+
+
+
+                break;
+
+        case 2:
+
+                break;
+
+
     }
-
-
+    system("cls");
+    opcion = -1;
 }
     return 0;
 
